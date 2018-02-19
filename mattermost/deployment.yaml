@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mattermost-deployment
+  labels:
+    app: mattermost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mattermost
+  template:
+    metadata:
+      labels:
+        app: mattermost
+    spec:
+      containers:
+      - name: mattermost
+        image: quay.io/mrmm/mattermost-team-edition:4.6.1
+        ports:
+        - containerPort: 80
+        env:
+          - name: MM_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: pg-username
+                name: pg-secret
+          - name: MM_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: pg-username
+                name: pg-secret
+          - name: MM_DBNAME
+            valueFrom:
+              secretKeyRef:
+                key: pg-username
+                name: pg-secret
+          - name: DB_HOST
+            value: postgres
+        volumeMounts:
+          - mountPath: /mattermost/config/
+            name: mattermost-config
+      volumes:
+        - name: mattermost-config
+          configMap:
+            name: mattermost-config
