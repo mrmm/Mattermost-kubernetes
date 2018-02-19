@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mattermost-deployment
+  name: mattermost
   labels:
     app: mattermost
 spec:
