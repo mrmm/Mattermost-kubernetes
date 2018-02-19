@@ -8,13 +8,13 @@ data:
   config.json: |
     {
         "ServiceSettings": {
-            "SiteURL": "",
+            "SiteURL": "http://mattermost.mouradmaatoug.com/",
             "LicenseFileLocation": "",
             "ListenAddress": ":80",
             "ConnectionSecurity": "",
             "TLSCertFile": "",
             "TLSKeyFile": "",
-            "UseLetsEncrypt": false,
+            "UseLetsEncrypt": true,
             "LetsEncryptCertificateCacheFile": "./config/letsencrypt.cache",
             "Forward80To443": false,
             "ReadTimeout": 300,
