@@ -19,6 +19,7 @@ spec:
         image: quay.io/mrmm/mattermost-team-edition:4.6.1
         ports:
         - containerPort: 80
+        - containerPort: 443
         env:
           - name: MM_USERNAME
             valueFrom:
