@@ -1,0 +1,44 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:9
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: pg-username
+                  name: pg-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: pg-username
+                  name: pg-secret
+            - name: PGDATA
+              value: /pg_data
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /pg_data
+              name: pg-data
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: pg-init-monitoring-user
+      volumes:
+        - name: pg-data
+          emptyDir: {}
+        - name: pg-init-monitoring-user
+          secret:
+            secretName: pg-secret
+            items:
+              - key: init-monitoring.sql
+                path: init-monitoring.sql
