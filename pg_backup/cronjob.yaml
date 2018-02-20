@@ -33,11 +33,11 @@ spec:
             - name: POSTGRES_HOST
               value: postgres
             image: jmcarbo/docker-postgres-backup
-          volumeMounts:
-            - mountPath: /backup/
-              name: backup-volume
-        volumes:
-          - name: backup-volume
-            hostPath:
-              # directory location on host
-              path: /ps_backup
+            volumeMounts:
+              - mountPath: /backup/
+                name: backup-volume
+          volumes:
+            - name: backup-volume
+              hostPath:
+                # directory location on host
+                path: /ps_backup
