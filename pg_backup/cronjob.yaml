@@ -1,0 +1,43 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "50 23 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            env:
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: CRON_TIME
+              value: "55 23 * * *"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: pg-username
+                  name: pg-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: pg-username
+                  name: pg-secret
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  key: pg-username
+                  name: pg-secret
+            - name: POSTGRES_HOST
+              value: postgres
+            image: jmcarbo/docker-postgres-backup
+          volumeMounts:
+            - mountPath: /backup/
+              name: backup-volume
+        volumes:
+          - name: backup-volume
+            hostPath:
+              # directory location on host
+              path: /ps_backup
