@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-exporter
+  labels:
+    app: postgres-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-exporter
+  template:
+    metadata:
+      labels:
+        app: postgres-exporter
+    spec:
+      containers:
+      - name: exporter
+        image: wrouesnel/postgres_exporter:v0.4.1
+        ports:
+        - containerPort: 9187
+        env:
+        - name: DATA_SOURCE_URI
+          value: postgres:5432/mattermost?sslmode=disable
+        - name: DATA_SOURCE_USER
+          valueFrom:
+            secretKeyRef:
+              key: exporter-username
+              name: exporter-secret
+        - name: DATA_SOURCE_PASS
+          valueFrom:
+            secretKeyRef:
+              key: exporter-password
+              name: exporter-secret
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "128m"
+          limits:
+            memory: "64Mi"
+            cpu: "128m"
