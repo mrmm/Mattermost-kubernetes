@@ -21,30 +21,30 @@ spec:
         - containerPort: 80
         - containerPort: 443
         env:
-          - name: MM_USERNAME
-            valueFrom:
-              secretKeyRef:
-                key: pg-username
-                name: pg-secret
-          - name: MM_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: pg-username
-                name: pg-secret
-          - name: MM_DBNAME
-            valueFrom:
-              secretKeyRef:
-                key: pg-username
-                name: pg-secret
-          - name: DB_HOST
-            value: postgres
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-            limits:
-              memory: "512Mi"
-              cpu: "750m"
+        - name: MM_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: pg-username
+              name: pg-secret
+        - name: MM_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: pg-username
+              name: pg-secret
+        - name: MM_DBNAME
+          valueFrom:
+            secretKeyRef:
+              key: pg-username
+              name: pg-secret
+        - name: DB_HOST
+          value: postgres
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "750m"
+          limits:
+            memory: "630Mi"
+            cpu: "1000m"
         volumeMounts:
           - mountPath: /mattermost/config/
             name: mattermost-config

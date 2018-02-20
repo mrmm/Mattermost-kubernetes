@@ -8,5 +8,5 @@ spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: mattermost-deployment
+    name: mattermost
   targetCPUUtilizationPercentage: 80
