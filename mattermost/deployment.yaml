@@ -38,6 +38,13 @@ spec:
                 name: pg-secret
           - name: DB_HOST
             value: postgres
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "750m"
         volumeMounts:
           - mountPath: /mattermost/config/
             name: mattermost-config
